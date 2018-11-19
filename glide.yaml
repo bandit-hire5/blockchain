@@ -1,0 +1,4 @@
+package: naeltok/go-blockchain
+import:
+- package: github.com/BurntSushi/toml
+  version: ^0.3.1
