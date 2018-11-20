@@ -4,15 +4,17 @@ import (
 	"encoding/json"
 	"net/http"
 
+	l "naeltok/go-blockchain/ledger"
+	m "naeltok/go-blockchain/middlewares"
+
 	"github.com/gorilla/mux"
 )
 
-type Router struct{}
-
-func (ro Router) Init() *mux.Router {
+func Router(l *l.Ledger) *mux.Router {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/block", NewBlock).Methods("POST")
+	//r.HandleFunc("/block", m.AddContext(context, NewBlock)).Methods("POST")
+	r.Handle("/block", m.AddContextLedger(l, http.HandlerFunc(NewBlock))).Methods("POST")
 
 	return r
 }
@@ -23,6 +25,7 @@ func respondWithError(w http.ResponseWriter, code int, msg string) {
 
 func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	w.Write(response)

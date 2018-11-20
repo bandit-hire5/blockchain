@@ -8,6 +8,7 @@ import (
 
 type Config struct {
 	LedgerPath string
+	Port       string
 }
 
 func (c *Config) Read() {
