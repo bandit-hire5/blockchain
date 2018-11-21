@@ -4,7 +4,6 @@ import (
 	"log"
 	c "naeltok/go-blockchain/config"
 	l "naeltok/go-blockchain/ledger"
-	r "naeltok/go-blockchain/routes"
 	"net/http"
 )
 
@@ -24,11 +23,13 @@ func NewApp(config c.Config) *App {
 }
 
 func (a *App) Server() {
-	router := r.Router(a.Ledger)
+	server := NewServer("/entry", a.Ledger)
+	go server.Listen()
 
-	if err := http.ListenAndServe(":"+a.config.Port, router); err != nil {
-		log.Fatal(err)
-	}
+	//router := r.Router(a.Ledger)
+	//http.Handle("/", http.FileServer(http.Dir("webroot")))
+
+	log.Fatal(http.ListenAndServe(":"+a.config.Port, nil))
 }
 
 func (a *App) initLedger() {

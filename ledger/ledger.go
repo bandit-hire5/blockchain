@@ -93,6 +93,29 @@ func (l *Ledger) GetLatestBlock() (Block, error) {
 	return block, nil
 }
 
+func (l *Ledger) GetFullLedger() ([]string, error) {
+	var list []string
+
+	file, err := os.Open(l.Filepath)
+	if err != nil {
+		return list, err
+	}
+
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		list = append(list, scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		return list, err
+	}
+
+	return list, nil
+}
+
 func (l *Ledger) GenerateNextBlock(data Data) (Block, error) {
 	previousBlock, err := l.GetLatestBlock()
 	if err != nil {
