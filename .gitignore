@@ -1,4 +1,6 @@
-block/ledger.txt
+ledger/ledger.txt
 config.toml
 vendor/
-go-blockchain
+blockchain
+webroot/
+tmp/

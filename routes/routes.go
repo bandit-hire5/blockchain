@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"net/http"
 
-	l "naeltok/go-blockchain/ledger"
-	m "naeltok/go-blockchain/middlewares"
+	"github.com/bandit/blockchain-core"
+	m "github.com/bandit/blockchain/middlewares"
 
 	"github.com/gorilla/mux"
 )
 
-func Router(l *l.Ledger) *mux.Router {
+func Router(l *core.Ledger) *mux.Router {
 	r := mux.NewRouter()
 
 	//r.HandleFunc("/block", m.AddContext(context, NewBlock)).Methods("POST")

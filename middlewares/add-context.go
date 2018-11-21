@@ -2,15 +2,16 @@ package middlewares
 
 import (
 	"context"
-	l "naeltok/go-blockchain/ledger"
 	"net/http"
+
+	"github.com/bandit/blockchain-core"
 )
 
 type handler func(http.ResponseWriter, *http.Request)
 
 const ctxLedgerKey = "ledger"
 
-func AddContextLedger(ledger *l.Ledger, next http.Handler) http.Handler {
+func AddContextLedger(ledger *core.Ledger, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), ctxLedgerKey, ledger)
 
@@ -18,6 +19,6 @@ func AddContextLedger(ledger *l.Ledger, next http.Handler) http.Handler {
 	})
 }
 
-func Ledger(r *http.Request) *l.Ledger {
-	return r.Context().Value(ctxLedgerKey).(*l.Ledger)
+func Ledger(r *http.Request) *core.Ledger {
+	return r.Context().Value(ctxLedgerKey).(*core.Ledger)
 }

@@ -2,15 +2,15 @@ package app
 
 import (
 	"log"
-	c "naeltok/go-blockchain/config"
-	l "naeltok/go-blockchain/ledger"
-	r "naeltok/go-blockchain/routes"
 	"net/http"
+
+	"github.com/bandit/blockchain-core"
+	c "github.com/bandit/blockchain/config"
 )
 
 type App struct {
 	config c.Config
-	Ledger *l.Ledger
+	Ledger *core.Ledger
 }
 
 func NewApp(config c.Config) *App {
@@ -24,16 +24,18 @@ func NewApp(config c.Config) *App {
 }
 
 func (a *App) Server() {
-	router := r.Router(a.Ledger)
+	server := NewServer("/entry", a.Ledger)
+	go server.Listen()
 
-	if err := http.ListenAndServe(":"+a.config.Port, router); err != nil {
-		log.Fatal(err)
-	}
+	//router := r.Router(a.Ledger)
+	//http.Handle("/", http.FileServer(http.Dir("webroot")))
+
+	log.Fatal(http.ListenAndServe(":"+a.config.Port, nil))
 }
 
 func (a *App) initLedger() {
-	ledger := l.NewLedger(a.config.LedgerPath)
-	ledger.Create()
+	ledger := core.NewLedger(a.config.LedgerPath)
+	ledger.CreateWithGenesisBlock()
 
 	a.Ledger = ledger
 }
