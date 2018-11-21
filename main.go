@@ -1,8 +1,8 @@
 package main
 
 import (
-	"naeltok/go-blockchain/app"
-	. "naeltok/go-blockchain/config"
+	"github.com/bandit/blockchain/app"
+	. "github.com/bandit/blockchain/config"
 )
 
 func main() {

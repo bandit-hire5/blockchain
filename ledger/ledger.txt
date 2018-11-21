@@ -1,3 +1,0 @@
-{"Index":0,"Hash":"9JcT9kpR15CSKYAUsoTel9g5OfM=","PreviousHash":"","Timestamp":"2018-11-19 17:13:51.895884513 +0000 UTC","Data":{"message":"genesis block"}}
-{"Index":1,"Hash":"mE-4MWYUeSMt0KK9pKazmYU_VJQ=","PreviousHash":"9JcT9kpR15CSKYAUsoTel9g5OfM=","Timestamp":"2018-11-20 10:06:22.925164603 +0000 UTC","Data":{"message":"My first message"}}
-{"Index":2,"Hash":"CvOaH-l0A9EBDmOtRj_oGTXmCgo=","PreviousHash":"mE-4MWYUeSMt0KK9pKazmYU_VJQ=","Timestamp":"2018-11-20 10:06:37.883776682 +0000 UTC","Data":{"message":"My second message"}}

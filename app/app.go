@@ -2,14 +2,15 @@ package app
 
 import (
 	"log"
-	c "naeltok/go-blockchain/config"
-	l "naeltok/go-blockchain/ledger"
 	"net/http"
+
+	"github.com/bandit/blockchain-core"
+	c "github.com/bandit/blockchain/config"
 )
 
 type App struct {
 	config c.Config
-	Ledger *l.Ledger
+	Ledger *core.Ledger
 }
 
 func NewApp(config c.Config) *App {
@@ -33,8 +34,8 @@ func (a *App) Server() {
 }
 
 func (a *App) initLedger() {
-	ledger := l.NewLedger(a.config.LedgerPath)
-	ledger.Create()
+	ledger := core.NewLedger(a.config.LedgerPath)
+	ledger.CreateWithGenesisBlock()
 
 	a.Ledger = ledger
 }

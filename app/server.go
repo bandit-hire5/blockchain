@@ -4,14 +4,13 @@ import (
 	"log"
 	"net/http"
 
-	l "naeltok/go-blockchain/ledger"
-
+	"github.com/bandit/blockchain-core"
 	"golang.org/x/net/websocket"
 )
 
 type Server struct {
 	pattern   string
-	ledger    *l.Ledger
+	ledger    *core.Ledger
 	messages  []*Message
 	clients   map[int]*Client
 	addCh     chan *Client
@@ -21,7 +20,7 @@ type Server struct {
 	errCh     chan error
 }
 
-func NewServer(pattern string, ledger *l.Ledger) *Server {
+func NewServer(pattern string, ledger *core.Ledger) *Server {
 	messages := []*Message{}
 	clients := make(map[int]*Client)
 	addCh := make(chan *Client)
@@ -63,8 +62,8 @@ func (s *Server) Err(err error) {
 	s.errCh <- err
 }
 
-func (s *Server) sendFullLedger(c *Client) {
-	list, err := s.ledger.GetFullLedger()
+func (s *Server) sendAllBlocks(c *Client) {
+	list, err := s.ledger.GetAllBlocks()
 	if err != nil {
 		c.doneCh <- true
 		return
@@ -106,8 +105,8 @@ func (s *Server) Listen() {
 		case c := <-s.addCh:
 			log.Println("Added new client")
 			s.clients[c.id] = c
-			log.Println("Now", len(s.clients), "clients connected.")
-			s.sendFullLedger(c)
+			log.Println("Now", len(s.clients), "clients connected")
+			s.sendAllBlocks(c)
 
 		// del a client
 		case c := <-s.delCh:
