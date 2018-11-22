@@ -2,5 +2,3 @@ ledger/ledger.txt
 config.toml
 vendor/
 blockchain
-webroot/
-tmp/
